@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title = ${post.spec.title} + ' - ' + ${site.title})}">
+  <th:block th:fragment="content">
+    <!-- 模拟Word文档内容区 -->
+    <div class="a4-content p-8 md:p-12 relative">
+      <!-- 文章标题 -->
+      <div class="text-center mb-8 mt-8">
+        <h1 
+          th:text="${post.spec.title}" 
+          class="text-size-2 font-songti font-semibold"
+        ></h1>
+        
+        <!-- 文章元数据 -->
+        <div class="mt-4 text-gray-500 font-fangSong text-size-4">
+          <span th:text="${post.owner.displayName}"></span>
+          <span class="mx-2">|</span>
+          <span th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"></span>
+        </div>
+      </div>
+      
+      <!-- 文章正文 -->
+      <article class="word-content font-fangSong text-size-3 leading-relaxed mb-8">
+        <!-- 主送机关名称 -->
+        <div class="mb-6" th:if="${post.categories != null and not #lists.isEmpty(post.categories)}">
+          <div class="font-fangSong text-size-3">
+            <span th:each="category, categoryStat : ${post.categories}">
+              <span th:text="${category.spec.displayName}"></span>
+              <span th:if="${!categoryStat.last}">、</span>
+            </span>
+          </div>
+        </div>
+        
+        <!-- 文章内容 -->
+        <div 
+          class="word-document-content" 
+          th:utext="${post.content.content}"
+          th:class="${theme.config.style.heading_style == 'default' ? 'word-headings-default' : (theme.config.style.heading_style == 'all-bold' ? 'word-headings-bold' : 'word-headings-same')}"
+        ></div>
+        
+        <!-- 附件部分 -->
+        <div class="mt-8" th:if="${post.tags != null and not #lists.isEmpty(post.tags)}">
+          <div class="font-fangSong ml-8 text-size-3">
+            <span class="font-fangSong">附件：</span>
+            <div class="ml-8">
+              <div th:each="tag, tagStat : ${post.tags}" class="mt-1">
+                <span th:text="${tagStat.count + '. ' + tag.spec.displayName}"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      
+      <!-- 上一篇/下一篇导航 -->
+      <div class="flex justify-between mt-8 border-t border-gray-200 pt-4">
+      
+      <!-- 使用正确的API获取上一篇/下一篇文章 -->
+      <div th:with="postCursor = ${postFinder.cursor(post.metadata.name)}" class="flex w-full justify-between">
+      
+      <!-- 上一篇 -->
+      <div>
+        <a 
+          th:if="${postCursor.hasPrevious()}" 
+          th:href="${postCursor.previous.status.permalink}" 
+          class="flex items-center gap-1 text-gray-700 hover:text-gray-900"
+          th:title="${postCursor.previous.spec.title}"
+        >
+          <span>&lt;</span>
+          <span th:text="${#strings.abbreviate(postCursor.previous.spec.title, 20)}"></span>
+        </a>
+      </div>
+      
+      <!-- 下一篇 -->
+      <div>
+        <a 
+          th:if="${postCursor.hasNext()}" 
+          th:href="${postCursor.next.status.permalink}" 
+          class="flex items-center gap-1 text-gray-700 hover:text-gray-900"
+          th:title="${postCursor.next.spec.title}"
+        >
+          <span th:text="${#strings.abbreviate(postCursor.next.spec.title, 20)}"></span>
+          <span>&gt;</span>
+        </a>
+      </div>
+      
+      </div>
+      </div>
+      
+      <!-- 评论区 -->
+      <div class="mt-8" th:if="${haloCommentEnabled}">
+        <h3 class="text-lg font-songti mb-4 border-none">留言</h3>
+        <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
+      </div>
+    </div>
+  </th:block>
+</html>

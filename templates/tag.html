@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title = '标签：' + ${tag.spec.displayName} + ' - ' + ${site.title})}">
+  <th:block th:fragment="content">
+    <div class="a4-content p-8 md:p-12">
+      <!-- 标签标题 -->
+      <div class="text-center mb-8">
+        <h1 class="text-size-2 font-songti font-semibold">
+          标签：<span th:text="${tag.spec.displayName}"></span>
+        </h1>
+        <div class="mt-2 text-gray-500 font-fangSong text-size-4">
+          共 <span th:text="${posts.total}"></span> 篇文章
+        </div>
+      </div>
+      
+      <!-- 标签列表 -->
+      <div class="mb-8 pb-4 border-b border-gray-200">
+        <div class="flex flex-wrap gap-2" th:with="tags = ${tagFinder.listAll()}">
+          <a
+            th:each="tagItem : ${tags}"
+            th:href="@{${tagItem.status.permalink}}"
+            th:title="${tagItem.spec.displayName}"
+            class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-size-4 font-fangSong"
+            th:classappend="${tag.metadata.name == tagItem.metadata.name} ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'"
+          >
+            <span th:text="${tagItem.spec.displayName}"></span>
+            <span class="text-xs" th:text="${tagItem.status.visiblePostCount}"></span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- 文章列表 -->
+      <div class="mt-8">
+        <div th:if="${posts.total > 0}">
+          <div th:each="post : ${posts.items}" class="mb-6 pb-6 border-b border-gray-200">
+            <h2 class="text-size-3 font-songti mb-2">
+              <a th:href="${post.status.permalink}" th:text="${post.spec.title}" class="hover:text-blue-600 no-underline"></a>
+            </h2>
+            <div class="text-gray-500 font-fangSong text-size-4 mb-2">
+              <span th:text="${post.owner.displayName}"></span>
+              <span class="mx-2">|</span>
+              <span th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"></span>
+              <span class="mx-2">|</span>
+              <span th:if="${not #lists.isEmpty(post.categories)}">
+                <a 
+                  th:href="${post.categories[0].status.permalink}" 
+                  th:text="${post.categories[0].spec.displayName}"
+                  class="text-gray-600 hover:text-blue-600"
+                ></a>
+              </span>
+            </div>
+            <div class="font-fangSong text-size-4 text-gray-700" th:if="${post.status.excerpt}">
+              <p th:text="${post.status.excerpt}"></p>
+            </div>
+          </div>
+          
+          <!-- 分页 -->
+          <div class="mt-12 flex justify-between items-center" th:if="${posts.hasPrevious() || posts.hasNext()}">
+            <a
+              th:href="@{${posts.prevUrl}}"
+              class="word-btn flex items-center gap-1 px-4 py-1 border border-gray-300 hover:bg-gray-50 text-gray-700"
+              th:class="${!posts.hasPrevious()} ? 'invisible' : ''"
+            >
+              <span>&lt;</span>
+              <span>上一页</span>
+            </a>
+            
+            <span class="text-size-4 text-gray-700 font-fangSong" th:text="|第 ${posts.page} 页 / 共 ${posts.totalPages} 页|"></span>
+            
+            <a
+              th:href="@{${posts.nextUrl}}"
+              class="word-btn flex items-center gap-1 px-4 py-1 border border-gray-300 hover:bg-gray-50 text-gray-700"
+              th:class="${!posts.hasNext()} ? 'invisible' : ''"
+            >
+              <span>下一页</span>
+              <span>&gt;</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 无文章 -->
+        <div th:if="${posts.total == 0}" class="text-center py-12">
+          <div class="text-size-3 font-fangSong text-gray-500">此标签下暂无文章</div>
+          <div class="mt-4">
+            <a th:href="@{/}" class="word-btn inline-flex items-center gap-1 px-4 py-1 border border-gray-300 hover:bg-gray-50 text-gray-700">
+              <span>&lt;</span>
+              <span>返回首页</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

@@ -1,0 +1,21 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-word
+spec:
+  displayName: Word 公文主题
+  author:
+    name: Halo
+    website: https://github.com/halo-dev
+  description: 一个模仿 Microsoft Word 公文排版的 Halo 主题，支持中文印刷标准，支持ICP备案号显示
+  logo: https://www.halo.run/logo
+  homepage: https://github.com/halo-dev
+  repo: https://github.com/halo-dev
+  issues: https://github.com/halo-dev/issues
+  settingName: "theme-word-setting"
+  configMapName: "theme-word-configMap"
+  version: "1.2.0"
+  requires: "2.0.0"
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/halo-dev/theme-modern-starter/blob/main/LICENSE"

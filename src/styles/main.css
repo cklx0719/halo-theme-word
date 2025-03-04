@@ -1,0 +1,340 @@
+/* Word 主题样式 */
+body {
+  background: #f5f5f5;
+  font-family: SimSun, serif;
+}
+
+/* 字体定义 */
+@font-face {
+  font-family: 'SimSun';
+  src: local('SimSun');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FangSong';
+  src: local('FangSong');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SimHei';
+  src: local('SimHei');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KaiTi';
+  src: local('KaiTi');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-songti {
+  font-family: SimSun, serif;
+}
+
+.font-fangSong {
+  font-family: FangSong, serif;
+}
+
+.font-heiti {
+  font-family: SimHei, sans-serif;
+}
+
+.font-kaiti {
+  font-family: KaiTi, serif;
+}
+
+/* 中文印刷标准字号 */
+.text-size-1 {
+  font-size: 42pt; /* 1号字 */
+}
+
+.text-size-2 {
+  font-size: 36pt; /* 2号字 */
+}
+
+.text-size-3 {
+  font-size: 21pt; /* 3号字 */
+}
+
+.text-size-4 {
+  font-size: 18pt; /* 4号字 */
+}
+
+.text-size-5 {
+  font-size: 15.75pt; /* 5号字 */
+}
+
+/* A4 纸张样式 */
+.a4-paper {
+  width: 100%;
+  max-width: 210mm;
+  min-height: 297mm;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.a4-content {
+  /* 页边距设置 */
+  padding-top: 37mm;    /* 上白边(天头) */
+  padding-left: 28mm;   /* 左白边(订口) */
+  padding-bottom: 35mm; /* 下白边 */
+  padding-right: 26mm;  /* 右白边 */
+  position: relative;
+  min-height: calc(297mm - 72mm); /* A4高度减去上下边距 */
+}
+
+/* Word 目录样式 */
+.word-toc .toc-item {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: baseline;
+}
+
+.word-toc .toc-title {
+  font-family: FangSong, serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.word-toc .toc-dots {
+  flex-grow: 1;
+  margin: 0 0.5rem;
+  border-bottom: 1px dotted #ccc;
+  height: 1px;
+  position: relative;
+  bottom: 0.25em;
+}
+
+/* 文章内容样式 */
+.word-content {
+  font-size: 21pt; /* 3号字 */
+  line-height: 1.75;
+  font-family: FangSong, serif;
+}
+
+.word-content p {
+  text-indent: 2em;
+  margin-bottom: 1em;
+}
+
+/* 标题样式 */
+.word-headings-default h1 {
+  font-family: SimHei, sans-serif; /* 一级标题用黑体 */
+  font-weight: 700;
+  font-size: 21pt; /* 3号字 */
+  margin: 1.5em 0 1em;
+}
+
+.word-headings-default h2 {
+  font-family: KaiTi, serif; /* 二级标题用楷体 */
+  font-size: 21pt; /* 3号字 */
+  margin: 1.25em 0 0.75em;
+}
+
+.word-headings-default h3,
+.word-headings-default h4 {
+  font-family: FangSong, serif; /* 三四级标题用仿宋 */
+  font-size: 21pt; /* 3号字 */
+  margin: 1em 0 0.5em;
+}
+
+.word-headings-bold h1,
+.word-headings-bold h2,
+.word-headings-bold h3,
+.word-headings-bold h4 {
+  font-family: SimHei, sans-serif;
+  font-weight: 700;
+  font-size: 21pt; /* 3号字 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .a4-content {
+    padding: 15px !important;
+    min-height: auto;
+  }
+  
+  .word-header,
+  .word-footer {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .a4-paper {
+    min-height: auto;
+    box-shadow: none;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* 移动端字体大小调整 */
+  .text-size-1 {
+    font-size: 32pt !important; /* 移动端1号字 */
+  }
+  
+  .text-size-2 {
+    font-size: 28pt !important; /* 移动端2号字 */
+  }
+  
+  .text-size-3 {
+    font-size: 18pt !important; /* 移动端3号字 */
+  }
+  
+  .text-size-4 {
+    font-size: 16pt !important; /* 移动端4号字 */
+  }
+  
+  .text-size-5 {
+    font-size: 14pt !important; /* 移动端5号字 */
+  }
+  
+  .word-content,
+  .word-document-content,
+  .word-document-content p,
+  .word-headings-default h1,
+  .word-headings-default h2,
+  .word-headings-default h3,
+  .word-headings-default h4,
+  .word-headings-bold h1,
+  .word-headings-bold h2,
+  .word-headings-bold h3,
+  .word-headings-bold h4 {
+    font-size: 18pt !important; /* 移动端统一字号 */
+  }
+  
+  /* 移动端导航按钮样式 */
+  .word-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* 导航按钮样式 */
+.word-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.word-btn:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* 文档内容样式 */
+.word-document-content {
+  counter-reset: section;
+  font-family: FangSong, serif;
+  font-size: 21pt; /* 3号字 */
+  line-height: 1.75;
+}
+
+.word-document-content h1 {
+  counter-increment: section;
+  font-family: SimHei, sans-serif; /* 一级标题用黑体 */
+  font-size: 21pt; /* 3号字 */
+}
+
+.word-document-content h1::before {
+  content: counter(section) ". ";
+}
+
+.word-document-content h2 {
+  font-family: KaiTi, serif; /* 二级标题用楷体 */
+  font-size: 21pt; /* 3号字 */
+}
+
+.word-document-content h3,
+.word-document-content h4 {
+  font-family: FangSong, serif; /* 三四级标题用仿宋 */
+  font-size: 21pt; /* 3号字 */
+}
+
+/* 段落样式 */
+.word-document-content p {
+  text-indent: 2em; /* 每自然段左空2字 */
+  margin-bottom: 1em;
+  line-height: 1.75;
+  font-family: FangSong, serif;
+  font-size: 21pt; /* 3号字 */
+}
+
+/* 列表样式 */
+.word-document-content ul {
+  list-style: disc;
+  padding-left: 2em;
+  margin-bottom: 1em;
+}
+
+.word-document-content ol {
+  list-style: decimal;
+  padding-left: 2em;
+  margin-bottom: 1em;
+}
+
+/* 页眉页脚样式 */
+.word-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.word-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  text-align: center;
+  height: 25mm; /* 页脚2.5厘米 */
+}
+
+/* 页码样式 */
+.word-footer .flex {
+  position: relative;
+  top: 7mm; /* 一字线距离版心下边缘7mm */
+}
+
+.word-footer .text-sm {
+  font-family: SimHei, sans-serif; /* 页码用半角白体 */
+  font-size: 18pt; /* 4号字 */
+}
+
+.word-footer .w-16 {
+  height: 1.5px; /* 一字线粗细 */
+  background-color: #000;
+}
+
+/* 文章标题样式 */
+.text-2xl.font-songti {
+  font-size: 36pt; /* 2号字 */
+  font-family: SimSun, serif; /* 小标宋体 */
+  font-weight: 700;
+}
+
+/* 附件样式 */
+.font-fangSong.ml-8 {
+  font-family: FangSong, serif;
+  font-size: 21pt; /* 3号字 */
+  margin-left: 2em; /* 左空2字 */
+}

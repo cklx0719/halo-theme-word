@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" th:fragment="html (content, title)">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title ?: site.title}"></title>
+    <link rel="stylesheet" th:href="@{/assets/dist/style.css?v={version}(version=${theme.spec.version})}" />
+    <script th:src="@{/assets/dist/main.iife.js?v={version}(version=${theme.spec.version})}" defer></script>
+  </head>
+  <body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm">
+      <div class="container mx-auto px-4 py-2 flex items-center justify-between">
+        <!-- 移动端菜单按钮 -->
+        <div class="block md:hidden">
+          <button 
+            id="mobile-menu-button"
+            class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- 站点标题 -->
+        <div class="text-xl font-bold text-center flex-1 md:flex-none md:text-left">
+          <a th:href="@{/}" th:text="${site.title}" class="text-gray-800 no-underline hover:text-gray-600"></a>
+        </div>
+        
+        <!-- 导航菜单 -->
+        <nav class="hidden md:flex items-center space-x-6">
+          <!-- 使用正确的菜单API -->
+          <th:block th:with="menus = ${menuFinder.getPrimary()}">
+            <th:block th:if="${menus != null and not #lists.isEmpty(menus.menuItems)}" th:each="menu : ${menus.menuItems}">
+              <a th:href="${menu.status.href}" th:text="${menu.status.displayName}" 
+                 class="text-gray-700 hover:text-gray-900"></a>
+            </th:block>
+          </th:block>
+        </nav>
+        
+        <!-- 搜索框 -->
+        <div class="hidden md:block relative">
+          <!-- 使用 PluginSearchWidget 插件 -->
+          <th:block th:if="${pluginFinder.available('PluginSearchWidget')}">
+            <a href="javascript:SearchWidget.open()" title="搜索" class="text-gray-600 hover:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </a>
+          </th:block>
+          
+          <!-- 传统搜索方式 -->
+          <th:block th:unless="${pluginFinder.available('PluginSearchWidget')}">
+            <form method="get" th:action="@{/search}">
+              <input type="text" name="keyword" placeholder="搜索..." 
+                     class="pl-3 pr-10 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </form>
+          </th:block>
+        </div>
+      </div>
+      
+      <!-- 移动端菜单 -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <div class="px-4 py-3 bg-white border-t">
+          <!-- 使用正确的菜单API - 移动端 -->
+          <th:block th:with="menus = ${menuFinder.getPrimary()}">
+            <th:block th:if="${menus != null and not #lists.isEmpty(menus.menuItems)}" th:each="menu : ${menus.menuItems}">
+              <a th:href="${menu.status.href}" th:text="${menu.status.displayName}" 
+                 class="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md"></a>
+            </th:block>
+          </th:block>
+          
+          <!-- 搜索框 - 移动端 -->
+          <div class="mt-4 px-4">
+            <!-- 使用 PluginSearchWidget 插件 - 移动端 -->
+            <th:block th:if="${pluginFinder.available('PluginSearchWidget')}">
+              <button 
+                onclick="SearchWidget.open()"
+                class="w-full flex justify-between items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700"
+              >
+                <span>搜索...</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </th:block>
+            
+            <!-- 传统搜索方式 - 移动端 -->
+            <th:block th:unless="${pluginFinder.available('PluginSearchWidget')}">
+              <form method="get" th:action="@{/search}" class="flex">
+                <input type="text" name="keyword" placeholder="搜索..." 
+                       class="flex-1 pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              </form>
+            </th:block>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- A4纸大小的主内容区 -->
+    <main class="container mx-auto my-8 px-4 md:px-0">
+      <!-- 内容区，模拟A4纸张 -->
+      <div class="a4-paper mx-auto bg-white shadow-md relative">
+        <th:block th:replace="${content}" />
+      </div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="py-6 border-t">
+      <div class="container mx-auto px-4 text-center text-gray-600">
+        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> 
+           <span th:text="${site.title}"></span>. All rights reserved.</p>
+        
+        <!-- 备案号 -->
+        <p th:if="${theme.config.basic.icp_record != null and theme.config.basic.icp_record != ''}" class="mt-2">
+          <a href="https://beian.miit.gov.cn/" target="_blank" class="text-gray-500 hover:text-gray-700">
+            <span th:text="${theme.config.basic.icp_record}"></span>
+          </a>
+        </p>
+      </div>
+    </footer>
+    
+    <!-- 添加移动端菜单的JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

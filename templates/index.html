@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title = ${site.title})}">
+  <th:block th:fragment="content">
+    <div class="a4-content p-8 md:p-12">
+      <!-- 文档标题 -->
+      <div class="text-center mb-8">
+        <h1 class="text-size-2 font-songti font-semibold">文章目录</h1>
+        <div class="mt-2 text-gray-500 font-fangSong text-size-4">共 <span th:text="${posts.total}"></span> 篇文章</div>
+      </div>
+      
+      <!-- Word 风格的目录 -->
+      <div class="word-toc mt-8">
+        <div th:each="post, postStat : ${posts.items}" class="toc-item flex mb-3 items-baseline">
+          <!-- 文章标题 -->
+          <div class="toc-title">
+            <a 
+              th:href="${post.status.permalink}" 
+              class="font-fangSong text-size-3 hover:text-blue-600 no-underline flex items-center"
+            >
+              <span class="mr-2" th:text="${postStat.count + '.'}"></span>
+              <span th:text="${post.spec.title}"></span>
+            </a>
+          </div>
+          
+          <!-- 点线 -->
+          <div class="toc-dots flex-grow mx-2 self-end border-b border-dotted border-gray-300"></div>
+          
+          <!-- 页码 -->
+          <div class="toc-page text-right whitespace-nowrap">
+            <span class="font-fangSong text-gray-600 text-size-3" th:text="${postStat.count}"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 分页 -->
+      <div class="mt-12 flex justify-between items-center" th:if="${posts.hasPrevious() || posts.hasNext()}">
+        <a
+          th:href="@{${posts.prevUrl}}"
+          class="word-btn flex items-center gap-1 px-4 py-1 border border-gray-300 hover:bg-gray-50"
+          th:class="${!posts.hasPrevious()} ? 'invisible' : ''"
+        >
+          <span class="i-tabler-chevron-left"></span>
+          <span>上一页</span>
+        </a>
+        
+        <span class="text-size-4 text-gray-700 font-fangSong" th:text="|第 ${posts.page} 页 / 共 ${posts.totalPages} 页|"></span>
+        
+        <a
+          th:href="@{${posts.nextUrl}}"
+          class="word-btn flex items-center gap-1 px-4 py-1 border border-gray-300 hover:bg-gray-50"
+          th:class="${!posts.hasNext()} ? 'invisible' : ''"
+        >
+          <span>下一页</span>
+          <span class="i-tabler-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+  </th:block>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title = ${singlePage.spec.title} + ' - ' + ${site.title})}">
+  <th:block th:fragment="content">
+    <!-- 模拟Word文档内容区 -->
+    <div class="a4-content p-8 md:p-12 relative">
+      <!-- 文章标题 -->
+      <div class="text-center mb-8 mt-8">
+        <h1 
+          th:text="${singlePage.spec.title}" 
+          class="text-size-2 font-songti font-semibold"
+        ></h1>
+        
+        <!-- 文章元数据 -->
+        <div class="mt-4 text-gray-500 font-fangSong text-size-4">
+          <span th:text="${singlePage.owner.displayName}"></span>
+          <span class="mx-2">|</span>
+          <span th:text="${#dates.format(singlePage.spec.publishTime, 'yyyy年MM月dd日')}"></span>
+        </div>
+      </div>
+      
+      <!-- 页面内容 -->
+      <article class="word-content font-fangSong text-size-3 leading-relaxed mb-8">
+        <!-- 文章内容 -->
+        <div 
+          class="word-document-content" 
+          th:utext="${singlePage.content.content}"
+          th:class="${theme.config.style.heading_style == 'default' ? 'word-headings-default' : (theme.config.style.heading_style == 'all-bold' ? 'word-headings-bold' : 'word-headings-same')}"
+        ></div>
+      </article>
+      
+      <!-- 评论区 -->
+      <div class="mt-8" th:if="${haloCommentEnabled}">
+        <h3 class="text-lg font-songti mb-4 border-none">留言</h3>
+        <halo:comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}" />
+      </div>
+    </div>
+  </th:block>
+</html>

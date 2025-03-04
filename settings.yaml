@@ -1,0 +1,55 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-word-setting
+spec:
+  forms:
+    - group: basic
+      label: 基础设置
+      formSchema:
+        - $formkit: text
+          name: icp_record
+          label: 备案号
+          value: ""
+          help: "如果有备案号，请填写，将显示在网站底部并链接到工信部网站"
+    - group: post
+      label: 文章
+      formSchema:
+        - $formkit: select
+          name: content_theme
+          label: 颜色主题
+          value: prose-gray
+          options:
+            - value: prose-gray
+              label: 灰色
+            - value: prose-slate
+              label: 板岩色
+            - value: prose-zinc
+              label: 锌色
+            - value: prose-neutral
+              label: 中性色
+            - value: prose-stone
+              label: 石色
+    - group: layout
+      label: 布局
+      formSchema:
+        - $formkit: checkbox
+          name: show_header_footer
+          label: 显示页眉页脚
+          value: true
+          help: "在文章详情页显示页眉页脚"
+          
+    - group: style
+      label: 样式
+      formSchema:
+        - $formkit: select
+          name: heading_style
+          label: 标题样式
+          value: default
+          options:
+            - value: default
+              label: 默认(一级黑体,二级楷体,三四级仿宋)
+            - value: all-bold
+              label: 全部黑体
+            - value: all-same
+              label: 全部相同
