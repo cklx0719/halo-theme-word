@@ -40,10 +40,10 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/cklx0719/theme-word.git
+git clone https://github.com/cklx0719/halo-theme-word.git
 
 # 进入目录
-cd theme-word
+cd halo-theme-word
 
 # 安装依赖
 pnpm install
