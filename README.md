@@ -13,7 +13,7 @@
 - 集成了 [Alpine.js](https://alpinejs.dev/) 提供交互功能
 
 ## 预览
-点击访问: [红朝史记]（https://shiji.fun）
+点击访问: [红朝史记](https://shiji.fun)
 
 
 ![Word Theme Preview](./img/1.webp)
