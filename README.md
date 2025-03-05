@@ -14,7 +14,7 @@
 
 ## 预览
 
-![Word Theme Preview](https://example.com/word-theme-preview.png)
+![Word Theme Preview](./img/1.webp)
 
 ## 安装
 
