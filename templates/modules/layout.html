@@ -123,11 +123,32 @@
            <span th:text="${site.title}"></span>. All rights reserved.</p>
         
         <!-- 备案号 -->
-        <p th:if="${theme.config.basic.icp_record != null and theme.config.basic.icp_record != ''}" class="mt-2">
-          <a href="https://beian.miit.gov.cn/" target="_blank" class="text-gray-500 hover:text-gray-700">
-            <span th:text="${theme.config.basic.icp_record}"></span>
-          </a>
-        </p>
+        <div th:if="${(theme.config.basic.police_record != null and theme.config.basic.police_record != '') or (theme.config.basic.icp_record != null and theme.config.basic.icp_record != '')}" class="mt-2 flex justify-center items-center gap-4 text-gray-500">
+          <!-- 公安备案号 -->
+           <div th:if="${theme.config.basic.police_record != null and theme.config.basic.police_record != ''}" class="flex items-center gap-1">
+             <!-- 有链接时可点击 -->
+             <a th:if="${theme.config.basic.police_record_link != null and theme.config.basic.police_record_link != ''}" 
+                th:href="${theme.config.basic.police_record_link}" 
+                target="_blank" 
+                class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+               <img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" alt="公安备案" class="w-4 h-4" />
+               <span th:text="${theme.config.basic.police_record}"></span>
+             </a>
+             <!-- 无链接时不可点击 -->
+             <div th:unless="${theme.config.basic.police_record_link != null and theme.config.basic.police_record_link != ''}" 
+                  class="flex items-center gap-1">
+               <img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" alt="公安备案" class="w-4 h-4" />
+               <span th:text="${theme.config.basic.police_record}"></span>
+             </div>
+           </div>
+          
+          <!-- ICP备案号 -->
+          <div th:if="${theme.config.basic.icp_record != null and theme.config.basic.icp_record != ''}">
+            <a href="https://beian.miit.gov.cn/" target="_blank" class="text-gray-500 hover:text-gray-700">
+              <span th:text="${theme.config.basic.icp_record}"></span>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
     
