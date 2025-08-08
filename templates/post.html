@@ -20,15 +20,7 @@
       
       <!-- 文章正文 -->
       <article class="word-content font-fangSong text-size-3 leading-relaxed mb-8">
-        <!-- 主送机关名称 -->
-        <div class="mb-6" th:if="${post.categories != null and not #lists.isEmpty(post.categories)}">
-          <div class="font-fangSong text-size-3">
-            <span th:each="category, categoryStat : ${post.categories}">
-              <span th:text="${category.spec.displayName}"></span>
-              <span th:if="${!categoryStat.last}">、</span>
-            </span>
-          </div>
-        </div>
+
         
         <!-- 文章内容 -->
         <div 

@@ -12,6 +12,16 @@ spec:
           label: 备案号
           value: ""
           help: "如果有备案号，请填写，将显示在网站底部并链接到工信部网站"
+        - $formkit: text
+          name: police_record
+          label: 公安备案号
+          value: ""
+          help: "如果有公安备案号，请填写，将显示在网站底部"
+        - $formkit: text
+          name: police_record_link
+          label: 公安备案号链接
+          value: ""
+          help: "公安备案号的跳转链接，如果填写了公安备案号但没有填写链接，则不可点击"
     - group: post
       label: 文章
       formSchema:
